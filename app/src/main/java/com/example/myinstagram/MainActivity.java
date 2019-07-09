@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else{
-                     Log.e("LoginActivity", "Login Failure");
-                     e.printStackTrace();
+                    Log.e("LoginActivity", "Login Failure");
+                    e.printStackTrace();
                 }
             }
         });
