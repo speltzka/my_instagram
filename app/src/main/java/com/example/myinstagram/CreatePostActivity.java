@@ -19,13 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.myinstagram.model.Post;
 import com.parse.FindCallback;
-import com.parse.Parse;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseImageView;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -33,9 +31,8 @@ import com.parse.SaveCallback;
 import java.io.File;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class CreatePostActivity extends AppCompatActivity {
 
-    private static final String imagePath = "https://www.w3schools.com/images/picture.jpg";
     private Button refreshButton;
     private Button createButton;
     private Button logoutButton;
@@ -52,15 +49,14 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_create_post);
+        setContentView(R.layout.activity_create_post);
 
         descriptionInput = findViewById(R.id.description_et);
         refreshButton = findViewById(R.id.refresh_btn);
         createButton = findViewById(R.id.create_btn);
         logoutButton = findViewById(R.id.logoutButton);
 
-
-        loadTopPosts();
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,10 +65,10 @@ public class HomeActivity extends AppCompatActivity {
                 ParseUser user = ParseUser.getCurrentUser();
 
                 onLaunchCamera();
-               ParseFile parseFile = new ParseFile(photoFile);
-               Log.i("made it here!!!!!!!", parseFile.getName());
+                ParseFile parseFile = new ParseFile(photoFile);
+                Log.i("made it here!!!!!!!", parseFile.getName());
 
-              createPost(description, parseFile, user);
+                createPost(description, parseFile, user);
 
             }
         });
@@ -122,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.d("HomeActivity", "Create Post Success");
+                    Log.d("CreatePostActivity", "Create Post Success");
                 } else {
                     e.printStackTrace();
                 }
@@ -139,12 +135,28 @@ public class HomeActivity extends AppCompatActivity {
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objects.size(); ++i) {
-                        Log.d("HomeActivity", "Post[" + i + "] = " + objects.get(i)
+                        Log.d("CreatePostActivity", "Post[" + i + "] = " + objects.get(i)
                                 .getDescription()
                                 + "\nusername= " + objects.get(i).getUser().getUsername());
                     }
                 } else {
                     e.printStackTrace();
+                }
+            }
+        });
+        // Specify which class to query
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        // Specify the object id
+        query.getInBackground("aFuEsvjoHt", new GetCallback<Post>() {
+            public void done(Post item, ParseException e) {
+                if (e == null) {
+                    // Access data using the `get` methods for the object
+                    //Intent i
+                   //  = item.getDescription();
+                    // Do whatever you want with the data...
+                   // Toast.makeText(TodoItemsActivity.this, body, Toast.LENGTH_SHORT).show();
+                } else {
+                    // something went wrong
                 }
             }
         });
@@ -161,7 +173,7 @@ public class HomeActivity extends AppCompatActivity {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        fileProvider = FileProvider.getUriForFile(HomeActivity.this, "com.example.myinstagram", photoFile);
+        fileProvider = FileProvider.getUriForFile(CreatePostActivity.this, "com.example.myinstagram", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.

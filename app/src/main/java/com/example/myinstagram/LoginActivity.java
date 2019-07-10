@@ -1,9 +1,8 @@
 package com.example.myinstagram;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,7 +16,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText etUsername;
     private EditText etPassword;
@@ -26,14 +25,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
+
             // show the signup or login screen
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_login);
             etUsername = findViewById(R.id.etUsername);
             etPassword = findViewById(R.id.etPassword);
             btLogin = findViewById(R.id.btLogin);
@@ -45,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                     login(username, password);
                     }
                 });
-        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     Log.d("LoginActivity", "Login Successful");
-                    final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
                     finish();
                 }
 
