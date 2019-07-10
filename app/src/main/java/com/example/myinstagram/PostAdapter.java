@@ -2,6 +2,7 @@ package com.example.myinstagram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myinstagram.model.Post;
+import com.parse.ParseFile;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,11 +39,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
-   // Post post;
+
+
+    // Post post;
     //for each row, inflate the layout and cache references into ViewHolder
 
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
+        Log.i("createViewHolder", "create");
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -51,33 +56,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return viewHolder;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView tvPostText;
-        ImageView ivPostImage;
-
-        public ViewHolder(View itemView){
-            super(itemView);
-            TextView tvPostText = itemView.findViewById(R.id.tvPostText);
-            ImageView ivPostImage = itemView.findViewById(R.id.ivPostImage);
-        }
-    }
 
     //bind the values based on the position of the element
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         //get the data according to the position
-         post = mPosts.get(position);
-            Log.d("CreatePostActivity", "Post[" + position + "] = " + mPosts.get(position)
+        Log.i("BINDING", "BINDVIEW");
+           post = mPosts.get(position);
+            Log.d("CreatePostActivity", "Post[" + position + "] = " + post
                     .getDescription()
-                    + "\nusername= " + mPosts.get(position).getUser().getUsername());
+                    + "\nusername= " + post.getUser().getUsername());
         //populate the views according to this
          holder.tvPostText.setText(post.getDescription());
-         Glide.with(context)
-                .load(post.getImage())
-                .into(holder.ivPostImage);
-        }
 
+        ParseFile image = post.getImage();
+        if (image != null){
+            Glide.with(context)
+                    .load(image.getUrl())
+                    .into(holder.ivPostImage);
+        }
+    }
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvPostText;
+        ImageView ivPostImage;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tvPostText = itemView.findViewById(R.id.tvPostText);
+            ivPostImage = itemView.findViewById(R.id.ivPostImage);
+        }
+    }
 
 
 

@@ -76,11 +76,11 @@ public class TimelineActivity extends AppCompatActivity {
                 //construct the adapter from this data source
                 postAdapter = new PostAdapter(objects);
                 //recycler User user = new User();iew setup
-                rvInsta.setLayoutManager(new LinearLayoutManager(TimelineActivity.this));
-                //set the adapter
                 rvInsta.setAdapter(postAdapter);
+
+                rvInsta.setLayoutManager(new LinearLayoutManager(TimelineActivity.this));
                 if (e == null) {
-                    postAdapter.clear();
+                    //postAdapter.clear();
                     for (int i = 0; i < objects.size(); ++i) {
                        // posts.clear();
                         Log.d("CreatePostActivity", "Post[" + i + "] = " + objects.get(i)
