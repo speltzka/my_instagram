@@ -31,7 +31,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     //pass in post array to constructor
     public PostAdapter(List<Post> objects) {
         mPosts = objects;
-        for (int i = 0; i < mPosts.size(); ++i) {
+        for (int i = 0; i < objects.size(); ++i) {
             // posts.clear();
             Log.d("ADAPTERActivity", "Post[" + i + "] = " + mPosts.get(i)
                     .getDescription()

@@ -5,7 +5,8 @@
     <item
         android:id="@+id/camera"
         android:icon="@drawable/camera_shadow_fill"
-        android:title="actionTakePic"
+        android:onClick="composePost"
+        android:title="composePost"
         app:showAsAction="ifRoom" />
 
     <item

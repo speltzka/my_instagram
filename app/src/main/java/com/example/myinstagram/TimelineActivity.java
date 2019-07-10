@@ -7,7 +7,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,7 +33,7 @@ public class TimelineActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeContainer;
     ProgressBar progressBar;
     PostAdapter postAdapter;
-   // List<Post> posts;
+    // List<Post> posts;
 
 
     @Override
@@ -41,9 +45,16 @@ public class TimelineActivity extends AppCompatActivity {
             startActivity(intent);
         }
         setContentView(R.layout.activity_timeline);
-        rvInsta =  findViewById(R.id.rvInsta);
+        rvInsta = findViewById(R.id.rvInsta);
         swipeContainer = findViewById(R.id.swipeContainer);
         progressBar = findViewById(R.id.pbLoading);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+
         loadTopPosts();
 
         progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -63,12 +74,12 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
 
-
-
     private void loadTopPosts() {
-      //  showProgressBar();
+        //  showProgressBar();
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser();
+        postsQuery.setLimit(20);
+        postsQuery.addDescendingOrder(Post.KEY_CREATED_AT);
 
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
@@ -82,35 +93,34 @@ public class TimelineActivity extends AppCompatActivity {
                 if (e == null) {
                     //postAdapter.clear();
                     for (int i = 0; i < objects.size(); ++i) {
-                       // posts.clear();
+                        // posts.clear();
                         Log.d("CreatePostActivity", "Post[" + i + "] = " + objects.get(i)
                                 .getDescription()
                                 + "\nusername= " + objects.get(i).getUser().getUsername());
                     }
-                   // postAdapter.addAll(objects);
+                    // postAdapter.addAll(objects);
                 } else {
                     e.printStackTrace();
                 }
             }
         });
-        // Specify which class to query
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        // Specify the object id
-        query.getInBackground("aFuEsvjoHt", new GetCallback<Post>() {
-            public void done(Post item, ParseException e) {
-                if (e == null) {
-                    // Access data using the `get` methods for the object
-                    //Intent i
-                    //  = item.getDescription();
-                    // Do whatever you want with the data...
-                    Toast.makeText(TimelineActivity.this, "no error", Toast.LENGTH_SHORT).show();
-                } else {
-                    // something went wrong
-                    Toast.makeText(TimelineActivity.this, "post is null", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    public boolean composePost(MenuItem item) {
+        final Intent intent = new Intent(TimelineActivity.this, CreatePostActivity.class);
+        startActivity(intent);
+        return true;
+    }
+}
+
 
 
     // final Intent intent = new Intent(LoginActivity.this, CreatePostActivity.class);
@@ -128,4 +138,3 @@ public class TimelineActivity extends AppCompatActivity {
         miActionProgressItem.setVisible(false);
     }
     */
-}
