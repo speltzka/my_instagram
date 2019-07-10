@@ -5,6 +5,12 @@
     <item
         android:id="@+id/camera"
         android:icon="@drawable/camera_shadow_fill"
-        app:showAsAction="ifRoom|withText"
-        android:title="actionTakePic" />
+        android:title="actionTakePic"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@drawable/nav_logo_whiteout"
+        android:icon="@drawable/nav_logo_whiteout"
+        android:title="actionTakePic"
+        app:showAsAction="ifRoom" />
 </menu>
