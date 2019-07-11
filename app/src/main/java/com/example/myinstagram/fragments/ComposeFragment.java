@@ -80,7 +80,6 @@ public class ComposeFragment extends Fragment {
         ivPreview.setImageResource(R.drawable.camera_shadow_fill);
 
         hideProgressBar();
-        final boolean clicked = false;
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

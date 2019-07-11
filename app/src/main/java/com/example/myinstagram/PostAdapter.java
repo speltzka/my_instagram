@@ -71,24 +71,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.tvPostText.setText(post.getDescription());
         holder.timeStamp.setText(post.getTime());
         holder.username.setText(post.getName());
-//        holder.usernameProfile.setText(post.getName());
 
         ParseFile image = post.getImage();
+        //ParseFile profilePhoto = post.getProfileImage();
         if (image != null){
             Glide.with(context)
                     .load(image.getUrl())
                     .into(holder.ivPostImage);
         }
+       /* if (profilePhoto != null){
+            Glide.with(context)
+                    .load(image.getUrl())
+                    .into(holder.profilePhotoPost);
+        }
+        */
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvPostText;
         TextView timeStamp;
         TextView username;
         TextView usernameProfile;
         ImageView ivPostImage;
         ImageView likeButton;
+        ImageView profilePhotoPost;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,6 +105,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             username = itemView.findViewById(R.id.userNamePost);
             likeButton = itemView.findViewById(R.id.likeButton);
             usernameProfile = itemView.findViewById(R.id.userName);
+            profilePhotoPost = itemView.findViewById(R.id.profilePhotoPost);
             itemView.setOnClickListener(this);
         }
 
@@ -106,9 +114,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             // gets position
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-           //   Intent intent = new Intent(context, DetailsActivity.class);
-              //intent.putExtra()
-            //   context.startActivity(intent);
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra(post.getName(), "name" );
+                context.startActivity(intent);
             }
 
         }
