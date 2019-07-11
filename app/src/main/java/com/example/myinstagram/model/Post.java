@@ -6,12 +6,17 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @ParseClassName("Post")
 public class Post extends ParseObject {
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
     public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_USERNAME = "username";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -35,6 +40,17 @@ public class Post extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public String getName() {
+
+        return getUser().getUsername();
+    }
+
+    public String getTime(){
+     Date myDate = getCreatedAt();
+        return DateFormat.getDateTimeInstance(
+                DateFormat.SHORT, DateFormat.SHORT).format(myDate);
     }
 
     public ParseFile getMedia() {

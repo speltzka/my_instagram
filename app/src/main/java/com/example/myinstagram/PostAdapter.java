@@ -68,7 +68,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     .getDescription()
                     + "\nusername= " + post.getUser().getUsername());
         //populate the views according to this
-         holder.tvPostText.setText(post.getDescription());
+        holder.tvPostText.setText(post.getDescription());
+        holder.timeStamp.setText(post.getTime());
+        holder.username.setText(post.getName());
+        //holder.username.setText("USERNAME");
 
         ParseFile image = post.getImage();
         if (image != null){
@@ -79,14 +82,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvPostText;
+        TextView timeStamp;
+        TextView username;
         ImageView ivPostImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvPostText = itemView.findViewById(R.id.tvPostText);
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
+            timeStamp = itemView.findViewById(R.id.timeStampPost);
+            username = itemView.findViewById(R.id.userNamePost);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            // gets position
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+             //   Intent intent = new Intent(context, DetailsActivity.class);
+                //intent.putExtra()
+              //  context.startActivity(intent);
+            }
+
         }
     }
 

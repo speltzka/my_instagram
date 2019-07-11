@@ -9,12 +9,12 @@ import com.example.myinstagram.fragments.ComposeFragment;
 import com.example.myinstagram.fragments.ProfileFragment;
 import com.example.myinstagram.fragments.TimelineFragment;
 
-public class TestFragmentPagerAdapter extends FragmentPagerAdapter {
+public class InstaFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
     private String tabTitles[] = new String[] { "Timeline", "Compose","Profile" };
     private Context context;
 
-    public TestFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public InstaFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }

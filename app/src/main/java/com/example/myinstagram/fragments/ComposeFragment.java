@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -13,11 +14,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myinstagram.R;
@@ -30,6 +34,7 @@ import com.parse.SaveCallback;
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.SystemClock.sleep;
 
 public class ComposeFragment extends Fragment {
 
@@ -47,6 +52,7 @@ public class ComposeFragment extends Fragment {
     String description;
     ParseUser user;
     ParseFile parseFile;
+    ProgressBar miActionProgressItem;
     public static final String ARG_PAGE = "ARG_PAGE";
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -70,28 +76,34 @@ public class ComposeFragment extends Fragment {
         cameraButton = view.findViewById(R.id.cameraButton);
         ivPreview = view.findViewById(R.id.ivCameraPhoto);
         postButton = view.findViewById(R.id.postButton);
+        miActionProgressItem = getView().findViewById(R.id.pbLoading);
+        ivPreview.setImageResource(R.drawable.camera_shadow_fill);
 
+        hideProgressBar();
+        final boolean clicked = false;
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                description = descriptionInput.getText().toString();
-                user = ParseUser.getCurrentUser();
-
                 onLaunchCamera();
-                parseFile = new ParseFile(photoFile);
-                Log.i("made it here!!!!!!!", parseFile.getName());
-
             }
-        });
+         });
+         postButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 showProgressBar();
+                 description = descriptionInput.getText().toString();
+                 user = ParseUser.getCurrentUser();
+                 parseFile = new ParseFile(photoFile);
+                 sleep(2000);
+                 createPost(description, parseFile, user);
+                 descriptionInput.setText("");
+                 ivPreview.setImageResource(R.drawable.camera_shadow_fill);
+                 hideProgressBar();
+             }
+         });
 
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createPost(description, parseFile, user);
-
-            }
-        });
     }
+
 
 
     public static ComposeFragment newInstance(int page) {
@@ -103,12 +115,11 @@ public class ComposeFragment extends Fragment {
     }
 
     private void createPost(String description, ParseFile imageFile, ParseUser user) {
+        showProgressBar();
         final Post newPost = new Post();
         newPost.setDescription(description);
         newPost.setImage(imageFile);
         newPost.setUser(user);
-
-        // Glide.with(this).load(newPost.getMedia().getUrl()).into(imageView);
 
         newPost.saveInBackground(new SaveCallback() {
             @Override
@@ -118,6 +129,7 @@ public class ComposeFragment extends Fragment {
                 } else {
                     e.printStackTrace();
                 }
+
             }
         });
     }
@@ -171,5 +183,16 @@ public class ComposeFragment extends Fragment {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisibility(View.INVISIBLE);
     }
 }

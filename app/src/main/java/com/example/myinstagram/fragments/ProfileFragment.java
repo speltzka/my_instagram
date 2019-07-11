@@ -8,18 +8,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.myinstagram.MainActivity;
 import com.example.myinstagram.R;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
 
+    Button logoutButton;
+    TextView currentUser;
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     public static final String ARG_PAGE = "ARG_PAGE";
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-        Log.i("FRAGMENT", "GRGOERG");
         return inflater.inflate(R.layout.fragment_profile, parent, false);
     }
 
@@ -29,8 +35,16 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         super.onViewCreated(view, savedInstanceState);
-        Log.i("TEST_VIEW_WAS_CREATED", "GRGOERG");
-
+        logoutButton = view.findViewById(R.id.logoutButton);
+      //  currentUser = view.findViewById(R.id.currentUser);
+        //currentUser.setText("Click below to logout");
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                getActivity().finish();
+                    }
+                });
     }
 
     public static ProfileFragment newInstance(int page) {
