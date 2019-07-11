@@ -71,7 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.tvPostText.setText(post.getDescription());
         holder.timeStamp.setText(post.getTime());
         holder.username.setText(post.getName());
-        //holder.username.setText("USERNAME");
+//        holder.usernameProfile.setText(post.getName());
 
         ParseFile image = post.getImage();
         if (image != null){
@@ -86,6 +86,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView tvPostText;
         TextView timeStamp;
         TextView username;
+        TextView usernameProfile;
         ImageView ivPostImage;
         ImageView likeButton;
 
@@ -96,6 +97,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             timeStamp = itemView.findViewById(R.id.timeStampPost);
             username = itemView.findViewById(R.id.userNamePost);
             likeButton = itemView.findViewById(R.id.likeButton);
+            usernameProfile = itemView.findViewById(R.id.userName);
             itemView.setOnClickListener(this);
         }
 
@@ -104,9 +106,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             // gets position
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-             //   Intent intent = new Intent(context, DetailsActivity.class);
-                //intent.putExtra()
-              //  context.startActivity(intent);
+           //   Intent intent = new Intent(context, DetailsActivity.class);
+              //intent.putExtra()
+            //   context.startActivity(intent);
             }
 
         }

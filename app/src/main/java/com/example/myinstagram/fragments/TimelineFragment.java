@@ -44,6 +44,7 @@ public class TimelineFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         super.onViewCreated(view, savedInstanceState);
+        loadTopPosts();
         Log.i("VIEW_WAS_CREATED", "GRGOERG");
         rvInsta = view.findViewById(R.id.rvInsta);
         swipeContainer = view.findViewById(R.id.swipeContainer);
@@ -51,7 +52,6 @@ public class TimelineFragment extends Fragment {
 
         progressBar.setVisibility(ProgressBar.INVISIBLE);
 
-        loadTopPosts();
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

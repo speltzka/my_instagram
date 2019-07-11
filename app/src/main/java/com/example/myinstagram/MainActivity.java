@@ -2,12 +2,20 @@ package com.example.myinstagram;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.example.myinstagram.fragments.ComposeFragment;
+import com.example.myinstagram.fragments.ProfileFragment;
+import com.example.myinstagram.fragments.TimelineFragment;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,22 +31,20 @@ public class MainActivity extends AppCompatActivity {
             final Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-       // setContentView(R.layout.activity_main);
-        //final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        /*
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new InstaFragmentPagerAdapter(getSupportFragmentManager(),
                 MainActivity.this));
 
         // Give the TabLayout the ViewPager
-
-        // Give the TabLayout the ViewPager
         TabLayout tabLayout = findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        /*
-        bottomNavigationView  = findViewById(R.id.bottom_nav1);
-        bottomNavigationView.setupWithViewPager(viewPager);
+        */
 
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        bottomNavigationView  = findViewById(R.id.bottom_nav1);
         bottomNavigationView.setOnNavigationItemSelectedListener(
         new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -46,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        fragment = new ProfileFragment();
+                        fragment = new TimelineFragment();
                         break;
                     case R.id.action_compose:
-                        fragment = new TimelineFragment();
+                        fragment = new ComposeFragment();
                         break;
                     case R.id.action_logout:
-                        fragment = new TimelineFragment();
+                        fragment = new ProfileFragment();
                         break;
                     default:
                         fragment = new TimelineFragment();
@@ -63,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // Set default selection
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
-*/
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -75,12 +79,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    */
+
 }
