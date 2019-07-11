@@ -87,6 +87,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView timeStamp;
         TextView username;
         ImageView ivPostImage;
+        ImageView likeButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -94,6 +95,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
             timeStamp = itemView.findViewById(R.id.timeStampPost);
             username = itemView.findViewById(R.id.userNamePost);
+            likeButton = itemView.findViewById(R.id.likeButton);
             itemView.setOnClickListener(this);
         }
 
