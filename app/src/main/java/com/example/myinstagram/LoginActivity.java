@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btLogin;
+    private Button btSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             etUsername = findViewById(R.id.etUsername);
             etPassword = findViewById(R.id.etPassword);
             btLogin = findViewById(R.id.btLogin);
+            btSignUp = findViewById(R.id.signUp);
             btLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -40,6 +42,16 @@ public class LoginActivity extends AppCompatActivity {
                     login(username, password);
                     }
                 });
+
+            btSignUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final String username = etUsername.getText().toString();
+                    final String password = etPassword.getText().toString();
+                    signUp(username, password);
+                }
+                });
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,23 +75,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void signUp(View view){
+    private void signUp(final String username, final String password){
         // Create the ParseUser
         ParseUser user = new ParseUser();
         // Set core properties
-                user.setUsername("joestevens");
-                user.setPassword("secret123");
-                user.setEmail("email@example.com");
-        // Set custom properties
-                user.put("phone", "650-253-0000");
+                user.setUsername(username);
+                user.setPassword(password);
         // Invoke signUpInBackground
                 user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    // Hooray! Let them use the app now.
+                    login(username, password);
                 } else {
-                    // Sign up didn't succeed. Look at the ParseException
-                    // to figure out what went wrong
+                    e.printStackTrace();
                 }
             }
         });

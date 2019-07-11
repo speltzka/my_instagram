@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".TimelineActivity"
+            android:name=".MainActivity"
             android:label="Timeline Activity"
             android:theme="@style/AppTheme.NoActionBar">
 

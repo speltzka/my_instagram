@@ -1,7 +1,7 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".TimelineActivity">
+    tools:context=".MainActivity">
     <item
         android:id="@+id/camera"
         android:icon="@drawable/camera_shadow_fill"

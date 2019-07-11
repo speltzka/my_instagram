@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -56,7 +54,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         descriptionInput = findViewById(R.id.description_et);
         refreshButton = findViewById(R.id.refresh_btn);
-        createButton = findViewById(R.id.create_btn);
+        createButton = findViewById(R.id.cameraButton);
         logoutButton = findViewById(R.id.logoutButton);
 
 

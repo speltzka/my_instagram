@@ -1,63 +1,58 @@
-package com.example.myinstagram;
+package com.example.myinstagram.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.myinstagram.PostAdapter;
+import com.example.myinstagram.R;
 import com.example.myinstagram.model.Post;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineFragment extends Fragment {
 
     RecyclerView rvInsta;
     SwipeRefreshLayout swipeContainer;
     ProgressBar progressBar;
     PostAdapter postAdapter;
-    // List<Post> posts;
+    public static final String ARG_PAGE = "ARG_PAGE";
 
-
+    // The onCreateView method is called when Fragment should create its View object hierarchy,
+    // either dynamically or via XML layout inflation.
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser == null) {
-            final Intent intent = new Intent(TimelineActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-        setContentView(R.layout.activity_timeline);
-        rvInsta = findViewById(R.id.rvInsta);
-        swipeContainer = findViewById(R.id.swipeContainer);
-        progressBar = findViewById(R.id.pbLoading);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent,@Nullable  Bundle savedInstanceState) {
+        // Defines the xml file for the fragment
+        Log.i("FRAGMENT", "GRGOERG");
+        return inflater.inflate(R.layout.fragment_timeline, parent, false);
+    }
 
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
+    // This event is triggered soon after onCreateView().
+    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        // Setup any handles to view objects here
+        super.onViewCreated(view, savedInstanceState);
+        Log.i("VIEW_WAS_CREATED", "GRGOERG");
+        rvInsta = view.findViewById(R.id.rvInsta);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        progressBar = view.findViewById(R.id.pbLoading);
+
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
 
         loadTopPosts();
 
-        progressBar.setVisibility(ProgressBar.INVISIBLE);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -89,7 +84,7 @@ public class TimelineActivity extends AppCompatActivity {
                 //recycler User user = new User();iew setup
                 rvInsta.setAdapter(postAdapter);
 
-                rvInsta.setLayoutManager(new LinearLayoutManager(TimelineActivity.this));
+                rvInsta.setLayoutManager(new LinearLayoutManager(getContext()));
                 if (e == null) {
                     //postAdapter.clear();
                     for (int i = 0; i < objects.size(); ++i) {
@@ -106,35 +101,12 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-
-    public boolean composePost(MenuItem item) {
-        final Intent intent = new Intent(TimelineActivity.this, CreatePostActivity.class);
-        startActivity(intent);
-        return true;
+    public static TimelineFragment newInstance(int page) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        TimelineFragment fragment = new TimelineFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }
-
-
-
-    // final Intent intent = new Intent(LoginActivity.this, CreatePostActivity.class);
-    // startActivity(intent);
-    // finish();
-
-    /*
-    public void showProgressBar() {
-        // Show progress item
-        miActionProgressItem.setVisible(true);
-    }
-
-    public void hideProgressBar() {
-        // Hide progress item
-        miActionProgressItem.setVisible(false);
-    }
-    */
