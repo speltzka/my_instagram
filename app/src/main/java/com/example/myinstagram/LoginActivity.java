@@ -53,10 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 });
 
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
     }
 
     private void login(String username, String password){
