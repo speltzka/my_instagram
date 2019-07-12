@@ -63,10 +63,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         //get the data according to the position
         Log.i("BINDING", "BINDVIEW");
-           post = mPosts.get(position);
-            Log.d("CreatePostActivity", "Post[" + position + "] = " + post
-                    .getDescription()
-                    + "\nusername= " + post.getUser().getUsername());
+        post = mPosts.get(position);
+        Log.d("CreatePostActivity", "Post[" + position + "] = " + post
+                .getDescription()
+                + "\nusername= " + post.getUser().getUsername());
         //populate the views according to this
         holder.tvPostText.setText(post.getDescription());
         holder.timeStamp.setText(post.getTime());
@@ -114,8 +114,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             // gets position
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
+                // Post post = new mPosts.get(position);
+                Post newPost = mPosts.get(position);
                 Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra(post.getName(), "name" );
+                /*
+                intent.putExtra("USERNAME", post.getName());
+                intent.putExtra("TIME", post.getTime());
+                intent.putExtra("DESCRIPTION", post.getDescription());
+                intent.putExtra("POST_IMAGE", post.getImage());
+                */
+                intent.putExtra(Post.class.getSimpleName(), newPost);
+                //  intent.putExtra("PROFILE_IMAGE", post.getImage());
                 context.startActivity(intent);
             }
 
@@ -142,4 +151,3 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
 }
-
