@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.example.myinstagram.EndlessRecyclerViewScrollListener;
 import com.example.myinstagram.PostAdapter;
 import com.example.myinstagram.R;
 import com.example.myinstagram.model.Post;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class TimelineFragment extends Fragment {
 
+    private EndlessRecyclerViewScrollListener scrollListener;
     RecyclerView rvInsta;
     SwipeRefreshLayout swipeContainer;
     ProgressBar progressBar;
@@ -50,7 +52,42 @@ public class TimelineFragment extends Fragment {
         progressBar = view.findViewById(R.id.pbLoading);
 
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvInsta.setLayoutManager(linearLayoutManager);
 
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+
+                Log.i("SCROLL", "SCROOLL");
+                final Post.Query postsQuery = new Post.Query();
+                postsQuery.setSkip(totalItemsCount);
+                postsQuery.getTop().withUser();
+                postsQuery.setLimit(20);
+                postsQuery.addDescendingOrder(Post.KEY_CREATED_AT);
+
+                postsQuery.findInBackground(new FindCallback<Post>() {
+                    @Override
+                    public void done(List<Post> objects, ParseException e) {
+
+                        if (e == null) {
+                            //postAdapter.clear();
+                            for (int i = 0; i < objects.size(); ++i) {
+                                // posts.clear();
+                                Log.d("TIMELINE", "Post[" + i + "] = " + objects.get(i)
+                                        .getDescription()
+                                        + "\nusername= " + objects.get(i).getUser().getUsername());
+                            }
+                             postAdapter.addAll(objects);
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                postAdapter.notifyDataSetChanged();
+            }
+        };
+        rvInsta.addOnScrollListener(scrollListener);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -58,6 +95,7 @@ public class TimelineFragment extends Fragment {
                 loadTopPosts();
                 Log.i("trying to refresh", "refreshing");
                 swipeContainer.setRefreshing(false);
+               // rvInsta.addOnScrollListener(scrollListener);
             }
         });
         // Configure the refreshing colors
@@ -79,23 +117,21 @@ public class TimelineFragment extends Fragment {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 //construct the adapter from this data source
-                postAdapter = new PostAdapter(objects);
-                //recycler User user = new User();iew setup
-                rvInsta.setAdapter(postAdapter);
+                if (postAdapter == null){
+                    postAdapter = new PostAdapter(objects);
+                    rvInsta.setAdapter(postAdapter);
+                }
 
-                rvInsta.setLayoutManager(new LinearLayoutManager(getContext()));
                 if (e == null) {
-                    //postAdapter.clear();
                     for (int i = 0; i < objects.size(); ++i) {
-                        // posts.clear();
                         Log.d("TIMELINE", "Post[" + i + "] = " + objects.get(i)
                                 .getDescription()
                                 + "\nusername= " + objects.get(i).getUser().getUsername());
                     }
-                    // postAdapter.addAll(objects);
                 } else {
                     e.printStackTrace();
                 }
+                postAdapter.notifyDataSetChanged();
             }
         });
     }
