@@ -15,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,23 +40,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
             final Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-
-        /*
-
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new InstaFragmentPagerAdapter(getSupportFragmentManager(),
-                MainActivity.this));
-
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        */
+        setContentView(R.layout.activity_main);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         bottomNavigationView  = findViewById(R.id.bottom_nav1);

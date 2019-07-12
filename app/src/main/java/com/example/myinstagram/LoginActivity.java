@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.myinstagram.model.User;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -77,15 +78,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signUp(final String username, final String password){
         // Create the ParseUser
-        ParseUser user = new ParseUser();
+        User user = new User();
         // Set core properties
-                user.setUsername(username);
-                user.setPassword(password);
+        user.setUsername(username);
+        user.setPassword(password);
         // Invoke signUpInBackground
-                user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    login(username, password);
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) { if (e == null) {
+                //login(username, password);
                 } else {
                     e.printStackTrace();
                 }

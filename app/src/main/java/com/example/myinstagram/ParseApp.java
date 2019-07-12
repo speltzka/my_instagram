@@ -5,6 +5,7 @@ import android.app.Application;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.myinstagram.model.Post;
+import com.example.myinstagram.model.User;
 import com.parse.Parse;
 import com.parse.ParseConfig;
 import com.parse.ParseObject;
@@ -16,6 +17,7 @@ public class ParseApp extends Application {
 
         super.onCreate();
         ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(User.class);
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
                 .applicationId("myFinalFBUApp")
                 .clientKey("81811333")

@@ -45,7 +45,6 @@ public class TimelineFragment extends Fragment {
         // Setup any handles to view objects here
         super.onViewCreated(view, savedInstanceState);
         loadTopPosts();
-        Log.i("VIEW_WAS_CREATED", "GRGOERG");
         rvInsta = view.findViewById(R.id.rvInsta);
         swipeContainer = view.findViewById(R.id.swipeContainer);
         progressBar = view.findViewById(R.id.pbLoading);
@@ -89,7 +88,7 @@ public class TimelineFragment extends Fragment {
                     //postAdapter.clear();
                     for (int i = 0; i < objects.size(); ++i) {
                         // posts.clear();
-                        Log.d("CreatePostActivity", "Post[" + i + "] = " + objects.get(i)
+                        Log.d("TIMELINE", "Post[" + i + "] = " + objects.get(i)
                                 .getDescription()
                                 + "\nusername= " + objects.get(i).getUser().getUsername());
                     }

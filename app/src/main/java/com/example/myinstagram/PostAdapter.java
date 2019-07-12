@@ -2,10 +2,8 @@ package com.example.myinstagram;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myinstagram.model.Post;
+import com.example.myinstagram.model.User;
 import com.parse.ParseFile;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Post> mPosts;
@@ -41,7 +36,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 
 
-    // Post post;
     //for each row, inflate the layout and cache references into ViewHolder
 
 
@@ -73,18 +67,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.username.setText(post.getName());
 
         ParseFile image = post.getImage();
+        User user =  (User) post.getUser();
+        ParseFile profileImage = user.getProfileImage();
         //ParseFile profilePhoto = post.getProfileImage();
-        if (image != null){
+        if (profileImage != null){
             Glide.with(context)
                     .load(image.getUrl())
                     .into(holder.ivPostImage);
         }
-       /* if (profilePhoto != null){
+       if (image != null){
             Glide.with(context)
-                    .load(image.getUrl())
+                    .load(profileImage.getUrl())
                     .into(holder.profilePhotoPost);
         }
-        */
+
     }
 
 
@@ -100,7 +96,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             tvPostText = itemView.findViewById(R.id.tvPostText);
-            ivPostImage = itemView.findViewById(R.id.ivPostImage);
+            ivPostImage = itemView.findViewById(R.id.ivPostImageDetail);
             timeStamp = itemView.findViewById(R.id.timeStampPost);
             username = itemView.findViewById(R.id.userNamePost);
             likeButton = itemView.findViewById(R.id.likeButton);
@@ -117,12 +113,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 // Post post = new mPosts.get(position);
                 Post newPost = mPosts.get(position);
                 Intent intent = new Intent(context, DetailsActivity.class);
-                /*
-                intent.putExtra("USERNAME", post.getName());
-                intent.putExtra("TIME", post.getTime());
-                intent.putExtra("DESCRIPTION", post.getDescription());
-                intent.putExtra("POST_IMAGE", post.getImage());
-                */
                 intent.putExtra(Post.class.getSimpleName(), newPost);
                 //  intent.putExtra("PROFILE_IMAGE", post.getImage());
                 context.startActivity(intent);

@@ -1,6 +1,7 @@
 package com.example.myinstagram;
 
 import android.graphics.Movie;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,9 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.myinstagram.model.Post;
 import com.parse.ParseFile;
 
@@ -22,6 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView username;
     private TextView description;
     private  TextView time;
+    private ImageView ivPostImageDetail;
     Post post;
 
     @Override
@@ -35,6 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
         username = findViewById(R.id.userName);
         description =  findViewById(R.id.tvPostText);
         time = findViewById(R.id.timeStamp);
+        ivPostImageDetail = findViewById(R.id.ivPostImageDetail);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -44,6 +49,12 @@ public class DetailsActivity extends AppCompatActivity {
                 username.setText(post.getName());
                 description.setText(post.getDescription());
                 time.setText(post.getTime());
+                ParseFile image = post.getImage();
+                if (image != null){
+                    Glide.with(this)
+                            .load(image.getUrl())
+                            .into(ivPostImageDetail);
+                }
             }
         }
 

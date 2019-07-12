@@ -21,10 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.myinstagram.MainActivity;
 import com.example.myinstagram.R;
+import com.example.myinstagram.model.User;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
 
@@ -45,7 +49,7 @@ public class ProfileFragment extends Fragment {
     Bitmap takenImage;
     ImageView profilePhotoPost;
     ImageView profilePhotoProfile;
-    ParseUser user;
+    User user;
     ParseFile parseFile;
     ProgressBar miActionProgressItem;
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -64,12 +68,17 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         super.onViewCreated(view, savedInstanceState);
+        user = (User) ParseUser.getCurrentUser();
         logoutButton = view.findViewById(R.id.logoutButton);
         addProfilePhoto = view.findViewById(R.id.addProfilePhoto);
         profilePhotoProfile = view.findViewById(R.id.profilePhotoProfile);
         profilePhotoPost = view.findViewById(R.id.profilePhotoPost);
-      //  currentUser = view.findViewById(R.id.currentUser);
-        //currentUser.setText("Click below to logout");
+        ParseFile profileImage = user.getProfileImage();
+        if (profileImage != null){
+            Glide.with(this)
+                    .load(profileImage.getUrl())
+                    .into(profilePhotoProfile);
+        }
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,7 +148,19 @@ public class ProfileFragment extends Fragment {
                 takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 profilePhotoProfile.setImageBitmap(takenImage);
                 parseFile = new ParseFile(photoFile);
-                //user.setProfileImage(parseFile);
+                Log.i("imageset", "set");
+                user.setProfileImage(parseFile);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d("UPDATE", "Updated User");
+                        } else {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
