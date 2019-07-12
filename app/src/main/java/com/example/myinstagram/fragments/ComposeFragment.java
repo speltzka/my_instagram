@@ -79,7 +79,6 @@ public class ComposeFragment extends Fragment {
         miActionProgressItem = getView().findViewById(R.id.pbLoading);
         ivPreview.setImageResource(R.drawable.camera_shadow_fill);
 
-        hideProgressBar();
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,12 +88,10 @@ public class ComposeFragment extends Fragment {
          postButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 showProgressBar();
                  description = descriptionInput.getText().toString();
                  user = ParseUser.getCurrentUser();
                  parseFile = new ParseFile(photoFile);
-                 sleep(2000);
-                 createPost(description, parseFile, user);
+                 new Task().execute();
                  descriptionInput.setText("");
                  ivPreview.setImageResource(R.drawable.camera_shadow_fill);
                  hideProgressBar();
@@ -114,7 +111,6 @@ public class ComposeFragment extends Fragment {
     }
 
     private void createPost(String description, ParseFile imageFile, ParseUser user) {
-        showProgressBar();
         final Post newPost = new Post();
         newPost.setDescription(description);
         newPost.setImage(imageFile);
@@ -181,6 +177,33 @@ public class ComposeFragment extends Fragment {
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+
+    class Task extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            showProgressBar();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //hideProgressBar();
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            createPost(description, parseFile, user);
+
+            try {
+                Thread.sleep(3000000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 

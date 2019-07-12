@@ -9,9 +9,4 @@
         android:title="composePost"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@drawable/nav_logo_whiteout"
-        android:icon="@drawable/nav_logo_whiteout"
-        android:title="actionTakePic"
-        app:showAsAction="ifRoom" />
 </menu>
