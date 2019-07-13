@@ -102,7 +102,6 @@ public class TimelineFragment extends Fragment {
 
 
     private void loadTopPosts() {
-        //  showProgressBar();
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser();
         postsQuery.setLimit(20);
@@ -112,10 +111,8 @@ public class TimelineFragment extends Fragment {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 //construct the adapter from this data source
-                if (postAdapter == null) {
-                    postAdapter = new PostAdapter(objects);
-                    rvInsta.setAdapter(postAdapter);
-                }
+                postAdapter = new PostAdapter(objects);
+                rvInsta.setAdapter(postAdapter);
 
                 if (e == null) {
                     for (int i = 0; i < objects.size(); ++i) {

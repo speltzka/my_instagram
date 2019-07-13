@@ -60,7 +60,7 @@ public class ComposeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-        Log.i("FRAGMENT", "GRGOERG");
+        Log.i("Fragment", "Compose Fragment has been launched");
         return inflater.inflate(R.layout.fragment_compose, parent, false);
 
     }
@@ -71,7 +71,7 @@ public class ComposeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         super.onViewCreated(view, savedInstanceState);
-        Log.i("VIEW_WAS_CREATED", "GRGOERG");
+        Log.i("VIEW_WAS_CREATED", "Success");
         descriptionInput = view.findViewById(R.id.description_et);
         cameraButton = view.findViewById(R.id.cameraButton);
         ivPreview = view.findViewById(R.id.ivCameraPhoto);
@@ -94,7 +94,6 @@ public class ComposeFragment extends Fragment {
                 new Task().execute();
                 descriptionInput.setText("");
                 ivPreview.setImageResource(R.drawable.camera_shadow_fill);
-                hideProgressBar();
             }
         });
 
@@ -175,22 +174,24 @@ public class ComposeFragment extends Fragment {
     class Task extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
+            Log.i("PRE", "PRE");
             showProgressBar();
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            //hideProgressBar();
+            Log.i("POST", "POST_EX");
+            hideProgressBar();
             super.onPostExecute(result);
         }
 
         @Override
         protected Boolean doInBackground(String... params) {
             createPost(description, parseFile, user);
-
+            sleep(1000); //used to demo the fact that the progress icon works
             try {
-                Thread.sleep(3000000);
+                Thread.sleep(300);
             } catch (Exception e) {
                 e.printStackTrace();
             }

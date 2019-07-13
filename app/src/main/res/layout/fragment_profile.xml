@@ -10,16 +10,21 @@
 
     <Button
         android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginLeft="162dp"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
         android:layout_marginEnd="161dp"
         android:layout_marginRight="161dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="140dp"
+        android:autoText="false"
+        android:background="@color/colorAccent"
         android:text="Logout"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -36,14 +41,17 @@
 
     <Button
         android:id="@+id/addProfilePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="193dp"
+        android:layout_height="47dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="60dp"
+        android:background="#2196F3"
         android:text="Add/Change Profile Photo"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
