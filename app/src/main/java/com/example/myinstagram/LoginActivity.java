@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myinstagram.model.User;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,10 +77,11 @@ public class LoginActivity extends AppCompatActivity {
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
-                if (e != null) {
-                    e.printStackTrace();
+                if (e == null) {
+                    Toast.makeText(getApplicationContext(), "SignUp Successful, Click to Login", Toast.LENGTH_LONG).show();
+                } else{ e.printStackTrace();
+                    }
                 }
-            }
         });
     }
 }
