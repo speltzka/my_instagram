@@ -27,7 +27,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public PostAdapter(List<Post> objects) {
         mPosts = objects;
         for (int i = 0; i < objects.size(); ++i) {
-            // posts.clear();
             Log.d("ADAPTERActivity", "Post[" + i + "] = " + mPosts.get(i)
                     .getDescription()
                     + "\nusername= " + mPosts.get(i).getUser().getUsername());
@@ -35,10 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
 
-
     //for each row, inflate the layout and cache references into ViewHolder
-
-
     public ViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
         Log.i("createViewHolder", "create");
         context = parent.getContext();
@@ -52,7 +48,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 
     //bind the values based on the position of the element
-
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         //get the data according to the position
@@ -67,15 +62,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.username.setText(post.getName());
 
         ParseFile image = post.getImage();
-        User user =  (User) post.getUser();
+        User user = (User) post.getUser();
         ParseFile profileImage = user.getProfileImage();
         //ParseFile profilePhoto = post.getProfileImage();
-        if (profileImage != null){
+        if (profileImage != null) {
             Glide.with(context)
                     .load(image.getUrl())
                     .into(holder.ivPostImage);
         }
-       if (image != null){
+        if (image != null) {
             Glide.with(context)
                     .load(profileImage.getUrl())
                     .into(holder.profilePhotoPost);
@@ -107,14 +102,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            // gets position
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                // Post post = new mPosts.get(position);
                 Post newPost = mPosts.get(position);
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra(Post.class.getSimpleName(), newPost);
-                //  intent.putExtra("PROFILE_IMAGE", post.getImage());
                 context.startActivity(intent);
             }
 
@@ -122,8 +114,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
 
-
-    public int getItemCount(){
+    public int getItemCount() {
         return mPosts.size();
     }
 

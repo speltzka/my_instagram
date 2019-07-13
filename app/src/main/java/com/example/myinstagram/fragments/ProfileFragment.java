@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
         profilePhotoProfile = view.findViewById(R.id.profilePhotoProfile);
         profilePhotoPost = view.findViewById(R.id.profilePhotoPost);
         ParseFile profileImage = user.getProfileImage();
-        if (profileImage != null){
+        if (profileImage != null) {
             Glide.with(this)
                     .load(profileImage.getUrl())
                     .into(profilePhotoProfile);
@@ -84,22 +84,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 ParseUser.logOut();
                 getActivity().finish();
-                    }
-                });
+            }
+        });
         addProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onLaunchCamera();
             }
         });
-    }
-
-    public static ProfileFragment newInstance(int page) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        ProfileFragment fragment = new ProfileFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
 
@@ -130,7 +122,7 @@ public class ProfileFragment extends Fragment {
         File mediaStorageDir = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(APP_TAG, "failed to create directory");
         }
 

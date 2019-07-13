@@ -58,7 +58,7 @@ public class ComposeFragment extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent,@Nullable  Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         // Defines the xml file for the fragment
         Log.i("FRAGMENT", "GRGOERG");
         return inflater.inflate(R.layout.fragment_compose, parent, false);
@@ -84,31 +84,22 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
                 onLaunchCamera();
             }
-         });
-         postButton.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 description = descriptionInput.getText().toString();
-                 user = ParseUser.getCurrentUser();
-                 parseFile = new ParseFile(photoFile);
-                 new Task().execute();
-                 descriptionInput.setText("");
-                 ivPreview.setImageResource(R.drawable.camera_shadow_fill);
-                 hideProgressBar();
-             }
-         });
+        });
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description = descriptionInput.getText().toString();
+                user = ParseUser.getCurrentUser();
+                parseFile = new ParseFile(photoFile);
+                new Task().execute();
+                descriptionInput.setText("");
+                ivPreview.setImageResource(R.drawable.camera_shadow_fill);
+                hideProgressBar();
+            }
+        });
 
     }
 
-
-
-    public static ComposeFragment newInstance(int page) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        ComposeFragment fragment = new ComposeFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     private void createPost(String description, ParseFile imageFile, ParseUser user) {
         final Post newPost = new Post();
@@ -157,7 +148,7 @@ public class ComposeFragment extends Fragment {
         File mediaStorageDir = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(APP_TAG, "failed to create directory");
         }
 

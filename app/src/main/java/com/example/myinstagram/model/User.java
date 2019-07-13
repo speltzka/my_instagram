@@ -2,8 +2,6 @@ package com.example.myinstagram.model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 
@@ -23,14 +21,8 @@ public class User extends ParseUser{
         put(KEY_PROFILE_PHOTO, image);
     }
 
-    public void email(String email){
+    public void setEmail(String email){
         put(KEY_EMAIL, email);
     }
 
-    public static class Query extends ParseQuery<User> {
-        public Query() {
-            super(User.class);
-
-        }
-    }
 }

@@ -29,14 +29,12 @@ public class TimelineFragment extends Fragment {
     SwipeRefreshLayout swipeContainer;
     ProgressBar progressBar;
     PostAdapter postAdapter;
-    public static final String ARG_PAGE = "ARG_PAGE";
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent,@Nullable  Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-        Log.i("FRAGMENT", "GRGOERG");
         return inflater.inflate(R.layout.fragment_timeline, parent, false);
     }
 
@@ -71,14 +69,12 @@ public class TimelineFragment extends Fragment {
                     public void done(List<Post> objects, ParseException e) {
 
                         if (e == null) {
-                            //postAdapter.clear();
                             for (int i = 0; i < objects.size(); ++i) {
-                                // posts.clear();
                                 Log.d("TIMELINE", "Post[" + i + "] = " + objects.get(i)
                                         .getDescription()
                                         + "\nusername= " + objects.get(i).getUser().getUsername());
                             }
-                             postAdapter.addAll(objects);
+                            postAdapter.addAll(objects);
                         } else {
                             e.printStackTrace();
                         }
@@ -95,7 +91,6 @@ public class TimelineFragment extends Fragment {
                 loadTopPosts();
                 Log.i("trying to refresh", "refreshing");
                 swipeContainer.setRefreshing(false);
-               // rvInsta.addOnScrollListener(scrollListener);
             }
         });
         // Configure the refreshing colors
@@ -117,7 +112,7 @@ public class TimelineFragment extends Fragment {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 //construct the adapter from this data source
-                if (postAdapter == null){
+                if (postAdapter == null) {
                     postAdapter = new PostAdapter(objects);
                     rvInsta.setAdapter(postAdapter);
                 }
@@ -134,14 +129,5 @@ public class TimelineFragment extends Fragment {
                 postAdapter.notifyDataSetChanged();
             }
         });
-    }
-
-
-    public static TimelineFragment newInstance(int page) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        TimelineFragment fragment = new TimelineFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 }
